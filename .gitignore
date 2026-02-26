@@ -1,0 +1,102 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+## -------------------------
+##   FRONTEND (React)
+## -------------------------
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+frontend/package-lock.json
+frontend/yarn.lock
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+frontend/dist
+
+# misc
+frontend/.DS_Store
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/.eslintcache
+frontend/*.log
+
+# npm debug logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+## -------------------------
+##   BACKEND (C# / .NET)
+## -------------------------
+
+# .NET Core build folders
+backend/bin/
+backend/obj/
+
+# Visual Studio cache files
+.vs/
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Database files
+*.db
+*.sqlite
+
+# Coverage reporting
+coverage/
+
+# Publish output
+backend/publish/
+backend/PublishScripts/
+
+# Benchmark results
+BenchmarkDotNet.Artifacts/
+
+# Backup files
+*~
+*.bak
+*.swp
+
+## -------------------------
+##   OS & EDITORS
+## -------------------------
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Linux
+*~
+.directory
+
+# IDEs
+.idea/
+*.swp
+*.swo
+*~
