@@ -1,31 +1,28 @@
 import { Link } from 'react-router-dom';
-
-const buttonStyle = {
-  backgroundColor: '#007bff',
-  color: 'white',
-  border: 'none',
-  borderRadius: '5px',
-  padding: '12px 24px',
-  fontSize: '16px',
-  marginRight: '10px',
-  cursor: 'pointer',
-  textDecoration: 'none' 
-};
-
-const NavButton = ({ to, children }) => {
-  return (
-    <Link to={to} style={buttonStyle}>
-      {children}
-    </Link>
-  );
-};
+import { Button, Stack, Box } from '@mui/material';
 
 const NavButtons = () => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-      <NavButton to="/">FIRST PAGE</NavButton>
-      <NavButton to="/second">SECOND PAGE</NavButton>
-    </div>
+    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Stack direction="row" spacing={2}>
+        <Button 
+          component={Link} 
+          to="/" 
+          variant="contained" 
+          color="primary"
+        >
+          FIRST PAGE
+        </Button>
+        <Button 
+          component={Link} 
+          to="/second" 
+          variant="contained" 
+          color="primary"
+        >
+          SECOND PAGE
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
