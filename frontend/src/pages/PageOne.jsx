@@ -9,23 +9,49 @@ import {
   Alert
 } from '@mui/material';
 import NavButtons from '../components/NavButtons';
+import { createPerson } from '../services/api';  // импортируем API
 
 const PageOne = () => {
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [company, setCompany] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSave = () => {
-    console.log('Сохраняем:', { name, lastName, company });
-    setSuccessMessage('Пользователь успешно сохранён!');
-    setName('');
-    setLastName('');
-    setCompany('');
+  const handleSave = async () => {
+    setSuccessMessage('');
+    setErrorMessage('');
     
-    setTimeout(() => {
-      setSuccessMessage('');
-    }, 3000);
+    if (!name.trim() || !lastName.trim() || !company.trim()) {
+      setErrorMessage('Заполните все поля');
+      return;
+    }
+    
+    setLoading(true);
+    
+    try {
+      await createPerson({
+        firstName: name,
+        lastName: lastName,
+        company: company
+      });
+      
+      setSuccessMessage('Пользователь успешно сохранён!');
+      setName('');
+      setLastName('');
+      setCompany('');
+      
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Ошибка:', error);
+      setErrorMessage('Не удалось сохранить пользователя');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,13 +75,19 @@ const PageOne = () => {
       >
         <NavButtons />
 
-        <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
+        <Typography variant="h5" gutterBottom sx={{ mt: 2, mb: 3 }}>
           Создание пользователя
         </Typography>
 
         {successMessage && (
           <Alert severity="success" sx={{ mb: 2 }}>
             {successMessage}
+          </Alert>
+        )}
+
+        {errorMessage && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {errorMessage}
           </Alert>
         )}
 
@@ -67,6 +99,7 @@ const PageOne = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Введите имя"
+            disabled={loading}
           />
 
           <TextField
@@ -76,6 +109,7 @@ const PageOne = () => {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             placeholder="Введите фамилию"
+            disabled={loading}
           />
 
           <TextField
@@ -85,6 +119,7 @@ const PageOne = () => {
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             placeholder="Введите компанию"
+            disabled={loading}
           />
 
           <Button
@@ -92,24 +127,12 @@ const PageOne = () => {
             color="primary"
             size="large"
             onClick={handleSave}
+            disabled={loading}
             sx={{ mt: 1 }}
           >
-            СОХРАНИТЬ
+            {loading ? 'СОХРАНЕНИЕ...' : 'СОХРАНИТЬ'}
           </Button>
         </Stack>
-
-        {/* Отладка */}
-        <Box sx={{ mt: 3, p: 2, bgcolor: '#f5f5f5', borderRadius: 1, textAlign: 'left' }}>
-          <Typography variant="body2">
-            <strong>Имя:</strong> {name || 'не указано'}
-          </Typography>
-          <Typography variant="body2">
-            <strong>Фамилия:</strong> {lastName || 'не указано'}
-          </Typography>
-          <Typography variant="body2">
-            <strong>Компания:</strong> {company || 'не указано'}
-          </Typography>
-        </Box>
       </Paper>
     </Box>
   );
